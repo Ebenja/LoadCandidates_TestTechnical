@@ -73,6 +73,11 @@ export class CandidateListComponent {
   }
 
   reload(){
+
+    this.candidateService.getEmpleadosObservable().subscribe((data) => {
+      this.candidates = data;
+    });
+
     this.candidateService.getCandidates().subscribe( {next:(res) =>{
       this.candidates = res;
       // console.log(res)
