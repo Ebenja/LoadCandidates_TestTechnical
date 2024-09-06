@@ -58,6 +58,7 @@ export class CandidateFormComponent {
 
         this.candidateService.postCandidate2(formCandidate, this.excelFile).subscribe( {next:(res) =>{
           this.openSnackBar('Add succesfully', 'X')
+          this.candidateService.updateCandidate();
         },error: (error) => {
           this.openSnackBar('Error when try send candidate', 'X')
         },
