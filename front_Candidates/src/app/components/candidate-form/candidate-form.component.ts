@@ -54,7 +54,9 @@ export class CandidateFormComponent {
         formCandidate.append('surname', formValue.surname);
         formCandidate.append('file', this.excelFile);
 
-        this.candidateService.postCandidate(formCandidate).subscribe( {next:(res) =>{
+        console.log(formCandidate.getAll)
+
+        this.candidateService.postCandidate2(formCandidate, this.excelFile).subscribe( {next:(res) =>{
           this.openSnackBar('Add succesfully', 'X')
         },error: (error) => {
           this.openSnackBar('Error when try send candidate', 'X')

@@ -12,7 +12,7 @@ export class CandidatesController {
     @Post()
     @UseInterceptors(FileInterceptor('file'))
     create(@Body() candidate: Candidate, @UploadedFile() file: Express.Multer.File) {
-        this.candidatesService.create(candidate);
+        return this.candidatesService.createWithExcel(candidate, file);
     }
 
     @Get()

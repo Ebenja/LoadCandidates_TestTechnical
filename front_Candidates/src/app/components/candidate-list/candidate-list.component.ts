@@ -73,7 +73,7 @@ export class CandidateListComponent {
   reload(){
     this.candidateService.getCandidates().subscribe( {next:(res) =>{
       this.candidates = res;
-      console.log(res)
+      // console.log(res)
       this.openSnackBar('Reload succesfully', 'X')
     },error: (error) => {
       this.openSnackBar('Error when try send candidate', 'X')
