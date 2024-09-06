@@ -9,9 +9,10 @@ export class CandidateServiceService {
 
   constructor(private http: HttpClient) { }
 
-  postCandidate()
+  postCandidate(candidate: any): Observable<any>
   {
     
+    return this.http.post<any>('http://localhost:3000/candidates', candidate);
   }
 
 }

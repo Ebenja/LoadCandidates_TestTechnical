@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component , inject} from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatCard, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CandidateServiceService } from '../../services/candidate-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-candidate-form',
@@ -15,30 +18,57 @@ import {MatButtonModule} from '@angular/material/button';
     MatCardHeader,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    // HttpClient
+    // MatSnackBar
   ],
   templateUrl: './candidate-form.component.html',
   styleUrl: './candidate-form.component.css'
 })
 export class CandidateFormComponent {
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
   candidateForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
   });
 
   excelFile: File | null = null;
-  // constructor(private http: HttpClient) {}
+
+  constructor( private candidateService : CandidateServiceService, private http: HttpClient) {}
 
   onSubmit() {
     console.log(this.candidateForm.value);
     const formCandidate = new FormData();
 
     if (this.excelFile && this.candidateForm.valid){
-      // formCandidate.append('name', this.candidateForm.get('name')?.value);
-      // formCandidate.append('surname', this.candidateForm.get('surname')?.value);
-      formCandidate.append('file', this.excelFile);
+      const formValue = this.candidateForm.value;
 
-      // this.http.post('http://localhost:3000/candidates', this.candidateForm.value).subscribe((res)=> console.log(res));
+      if (formValue.name?.valueOf!=null && formValue.surname?.valueOf!=null)
+      {
+        formCandidate.append('name', formValue.name);
+        formCandidate.append('surname', formValue.surname);
+        formCandidate.append('file', this.excelFile);
+
+        this.candidateService.postCandidate(formCandidate).subscribe( {next:(res) =>{
+          this.openSnackBar('Add succesfully', 'X')
+        },error: (error) => {
+          this.openSnackBar('Error when try send candidate', 'X')
+        },
+      })
+
+      }else{
+        this.openSnackBar('Error, Review the inputs', 'X')
+      }
+      
+
+      //  this.http.post('http://localhost:3000/candidates', this.candidateForm.value).subscribe((res)=> console.log(res));
+    }else{
+      this.openSnackBar('Error, Review the inputs', 'X')
     }
 
     
@@ -47,14 +77,10 @@ export class CandidateFormComponent {
   }
 
   onFileChange(event: any) {
-    const excelFile = event.target.files[0];
-    if (this.excelFile) {
-      // const fr = new FileReader();
-      // fr.onload = () => {
-      //   console.log(fr.result);
-      // };
-      // fr.readAsDataURL(this.excelFile);
-      this.excelFile= excelFile;
+    const file = event.target.files[0];
+    if (file) {
+      this.excelFile = file;
+      console.log(this.excelFile)
     }
   }
 
