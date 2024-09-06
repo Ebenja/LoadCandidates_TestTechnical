@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';  
 import { CandidateServiceService } from '../../services/candidate-service.service'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-candidate-list',
@@ -20,7 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
-    CommonModule
+    CommonModule,
+    MatIcon
     
   ],
   templateUrl: './candidate-list.component.html',

@@ -1,6 +1,11 @@
 
 <mat-card class="contenedor">
-    <mat-card-header class="custom-title"><p>Candidates List</p></mat-card-header>
+    <mat-card-header class="custom-title"><p>Candidates List</p>
+        <!-- <button mat-raised-button > -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="refresh" (click)="reload()"></mat-icon>
+        <!-- </button> -->
+    </mat-card-header>
+    
     <ng-container *ngIf="candidates">
         <table mat-table [dataSource]="candidates" class="mat-elevation-z8">
             <ng-container matColumnDef="Name">
