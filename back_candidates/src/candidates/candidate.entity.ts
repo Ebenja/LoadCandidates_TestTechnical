@@ -5,4 +5,5 @@ export class Candidate {
     seniority: string;
     years: number;
     availability: boolean;
+    file:Express.Multer.File;
 }
