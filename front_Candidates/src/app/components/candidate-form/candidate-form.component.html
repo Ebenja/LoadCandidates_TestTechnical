@@ -1,0 +1,27 @@
+
+<mat-card class="contenedor">
+    <mat-card-header class="custom-title"><p>Candidate Form</p></mat-card-header>
+    <form class= "formulario" [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+        <!-- <div fxLayout="column" fxLayoutGap="10px"> -->
+            <mat-form-field >
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name"/>
+            </mat-form-field>
+        
+            <mat-form-field >
+                <mat-label>Surname</mat-label>
+                <input matInput placeholder="Surname" formControlName="surname"/>
+            </mat-form-field>
+
+
+            <!-- <mat-form-field > -->
+                <!-- <mat-label>Archivo Excel</mat-label> -->
+                <button mat-raised-button (click)="fileInput.click()">Choose Excel File</button>
+                <input hidden  type="file" (change)="onFileChange($event)" #fileInput />
+                <br>
+            <!-- </mat-form-field> -->
+
+            <button mat-raised-button color="primary" type="submit">Submit</button>  
+        <!-- </div> -->
+    </form>
+</mat-card>

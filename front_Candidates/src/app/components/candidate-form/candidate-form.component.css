@@ -1,0 +1,27 @@
+/* .form {
+    min-width: 500px;
+    max-width: 1000px;
+    width: 100%;
+}
+.form-full-width {
+    width: 100%;
+  } */
+
+  .contenedor {
+    display: flex;
+    flex-direction: column;
+    margin:1rem auto;
+    max-width: 1000px;
+}  
+.formulario {
+    /* min-width: 500px;
+    max-width: 1000px;
+    width: 100%; */
+    display: flex !important;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.custom-title {
+    font-size: 30px; /* Sobrescribe el tamaño de la clase predeterminada */
+  }
