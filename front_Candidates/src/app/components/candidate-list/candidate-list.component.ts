@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatCard, MatCardHeader, MatCardModule } from '@angular/material/card';
@@ -6,7 +6,9 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { CommonModule } from '@angular/common';   
+import { CommonModule } from '@angular/common';  
+import { CandidateServiceService } from '../../services/candidate-service.service'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-candidate-list',
@@ -25,11 +27,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './candidate-list.component.css'
 })
 export class CandidateListComponent {
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
   candidates: any[] = [];
   
   displayedColumns: string[] = ['Name', 'Surname', 'Seniority','Years', 'Availability']
 
-
+  constructor( private candidateService : CandidateServiceService) {}
   
   ngOnInit() {
     // this.http.get<any[]>('http://localhost:3000/empleado/list')
@@ -59,5 +66,18 @@ export class CandidateListComponent {
     //     Availability:'dd',
     //   }
     // ]
+    this.reload();
+    
+  }
+
+  reload(){
+    this.candidateService.getCandidates().subscribe( {next:(res) =>{
+      this.candidates = res;
+      console.log(res)
+      this.openSnackBar('Reload succesfully', 'X')
+    },error: (error) => {
+      this.openSnackBar('Error when try send candidate', 'X')
+    },
+  })
   }
 }

@@ -71,6 +71,7 @@ export class CandidateFormComponent {
       this.openSnackBar('Error, Review the inputs', 'X')
     }
 
+
     
 
     
